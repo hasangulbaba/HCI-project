@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.514/styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.514/styles/kendo.rtl.min.css"/>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.514/styles/kendo.silver.min.css"/>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.2.514/styles/kendo.mobile.all.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.2.514/js/kendo.all.min.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+<center>
+  <h1>GÜLBABA SİPARİŞ</h1>
+  <input type="radio" name="skill" id="cb1" value="hamburger"> hamburger 12 TL<br>
+  <input type="radio" name="skill" id="cb1" value="cheeseburger"> cheeseburger 15 TL<br>
+  <input type="radio" name="skill" id="cb1" value="lahmacun"> lahmacun 5 TL<br>
+  <input type="radio" name="skill" id="cb1" value="pide"> pide 12 TL<br>
+  <input type="radio" name="skill" id="cb1" value="mantı"> mantı 17 TL<br>
+  <input type="radio" name="skill" id="cb1" value="tavuk"> tavuk 14 TL<br>
+  
+  
+<input id="combobox" />
+  <button id="button" type="button" onClick="siparis()">sepete ekle</button>
+  <button id="button1" type="button" onClick="art()">adet arttır</button>
+  <button id="button2" type="button"  onClick="azalt()">adet azalt</button>
+   <button id="button3" type="button"  onClick="siparislerim()">sepetim</button>
+   <button id="button4" type="button" onClick="siparisGecmisi()">sipariş geçmişi</button>
+  <br>
+  <div id="question">
+  </div>
+  
+  <div id="siparisDetay" onClick="siparislerim()">
+  <h2>Siparişleriniz:</h2>
+  <br>
+   <button id="button5" type="button" onClick="siparisiptal()">siparişi iptal et</button>
+  <button id="button6" type="button" onClick="siparisOnay()">siparişi onayla</button>
+  </br>
+  </div>
+  
+  
+  </br>
+<div id="chart"></div>
+<script>
+
+
+
+
+
+
+$("#button").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button1").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button2").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button3").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button4").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button5").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+$("#button6").kendoButton();
+var button = $("#button").data("kendoButton");
+// disable button
+button.enable(false);
+// enable button
+button.enable(true);
+
+siparisler = new Set();
+var mantıadet=0;
+var lahmacunadet=0;
+var pideadet=0;
+var tavukadet=0;
+var hamburgeradet=0;
+var cheeseburgeradet=0;
+//
+fiyatListesi= [12,15,5,17,12,14];
+$("#combobox").kendoComboBox({
+  dataSource: [ "hamburger", "cheeseburger","lahmacun","pide","tavuk","mantı" ],
+  change: function(e) {
+    var value = this.value();
+    // Use the value of the widget
+    console.log(value);
+	return value;
+  }
+});
+
+
+function siparisOnay(){
+
+kendo.alert("siparişiniz alınmıştır!");
+}
+
+function siparisiptal(){
+
+siparisler.clear();
+kendo.alert("siparişiniz iptal edilmiştir!");
+//alert("siparişiniz iptal edilmiştir");
+document.getElementById('question').innerHTML = "seçilen adet: ";
+
+}
+function siparislerim(){
+	
+function samet() {
+			
+	a = [];
+	for(let i of siparisler){
+	obj = {};
+	obj.siparis = i;
+	if(i=="hamburger"){
+	obj.adet= hamburgeradet;
+	obj.fiyat=hamburgeradet*fiyatListesi[0];
+	}
+	else if(i=="cheeseburger"){
+obj.fiyat=cheeseburgeradet*fiyatListesi[1];
+	obj.adet= cheeseburgeradet;
+	}
+	else if(i=="pide"){
+obj.fiyat=pideadet*fiyatListesi[4];
+	obj.adet= pideadet;
+	}
+	else if(i=="mantı"){
+obj.fiyat=mantıadet*fiyatListesi[3];
+	obj.adet= mantıadet;
+	}
+	else if(i=="lahmacun"){
+obj.fiyat=lahmacunadet*fiyatListesi[2];
+	obj.adet= lahmacunadet;
+	}
+	else if(i=="tavuk"){
+	obj.fiyat=tavukadet*fiyatListesi[5];
+	obj.adet= tavukadet;
+	}
+			
+			console.log(i);
+			a.push(obj);
+			}
+			return a;
+		}
+
+
+
+$("#siparisDetay").kendoGrid({
+  columns: [{
+    field: "siparis",// create a column bound to the "name" field
+    title: "Siparişler" // set its title to "Name"
+  }, {
+    field: "adet",// create a column bound to the "age" field
+    title: "Adet" // set its title to "Age"
+  },{
+    field: "fiyat",// create a column bound to the "age" field
+    title: "Fiyat" // set its title to "Age"
+  }],
+  filterable: true,
+  dataSource: samet()
+});
+document.getElementById('question').innerHTML = "seçilen adet: ";
+}
+function art(){
+var xy = document.querySelector('input[name="skill"]:checked').value;
+if(xy=="hamburger"){
+hamburgeradet++;
+document.getElementById('question').innerHTML = "seçilen adet: "+ hamburgeradet;
+}
+else if(xy=="cheeseburger"){
+cheeseburgeradet++;
+document.getElementById('question').innerHTML = "seçilen adet: "+ cheeseburgeradet;
+}
+else if(xy=="pide"){
+pideadet++;
+document.getElementById('question').innerHTML = "seçilen adet: "+ pideadet;
+}
+else if(xy=="mantı"){
+mantıadet++;
+document.getElementById('question').innerHTML = "seçilen adet: "+ mantıadet;
+}
+else if(xy=="lahmacun"){
+lahmacunadet++;
+document.getElementById('question').innerHTML =  "seçilen adet: "+lahmacunadet;
+}
+else if(xy=="tavuk"){
+tavukadet++;
+document.getElementById('question').innerHTML = "seçilen adet: "+ tavukadet;
+}
+}
+
+function azalt(){
+var xy = document.querySelector('input[name="skill"]:checked').value;
+if(xy=="hamburger" && hamburgeradet>0){
+hamburgeradet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ hamburgeradet;
+}
+else if(xy=="cheeseburger" && cheeseburgeradet>0){
+cheeseburgeradet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ cheeseburgeradet;
+}
+else if(xy=="pide" && pideadet>0){
+pideadet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ pideadet;
+}
+else if(xy=="mantı" && mantıadet>0){
+mantıadet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ mantıadet;
+}
+else if(xy=="lahmacun" && lahmacunadet>0){
+lahmacunadet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ lahmacunadet;
+}
+else if(xy=="tavuk" && tavukadet>0){
+tavukadet--;
+document.getElementById('question').innerHTML = "seçilen adet: "+ tavukadet;
+}
+}
+
+function siparis(){
+var xy = document.querySelector('input[name="skill"]:checked').value;
+siparisler.add(xy)
+
+for(let i of siparisler){
+console.log(i);
+}
+
+}
+function siparisGecmisi(){
+$("#chart").kendoChart({
+title: {
+                text: "Müşteri Sipariş Geçmişi"
+            },
+  series: [
+    {name: "India", type: "line", data: [hamburgeradet,tavukadet,lahmacunadet,mantıadet,pideadet,cheeseburgeradet] },
+	{name: "India", type: "area", data: [hamburgeradet,tavukadet,lahmacunadet,mantıadet,pideadet,cheeseburgeradet]}
+  ],
+  valueAxis: {
+                labels: {
+                    format: "{0}%"
+                },
+                line: {
+                    visible: false
+                },
+                axisCrossingValue: -10
+            },
+	categoryAxis: {
+                categories: ["hamburger", "tavuk", "lahmacun"," mantı"," pide"," cheeseburger"],
+                majorGridLines: {
+                    visible: false
+                }
+            },
+			
+});
+}
+
+
+</script>
+</body>
+</html>
