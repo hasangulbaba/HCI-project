@@ -1,2 +1,2 @@
 # HCI-project
-[webPage](https://hasangulbaba.github.io/HCIproject/index)
+[webPage](https://hasangulbaba.github.io/HCIproject/index.html)
